@@ -104,7 +104,7 @@
             try {
               video.srcObject = stream
             } catch (error) {
-              video.src = URL.createObjectURL(stream)
+              video.srcObject = stream
             }
             video.play().catch(e => {
               console.log(e)
