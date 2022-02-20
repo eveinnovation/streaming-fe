@@ -1,5 +1,8 @@
 <template>
     <div>
+        <el-button type="info" @click="startFfmpeg" icon="el-icon-star-on" />
+        <el-button type="info" @click="startReceivingVideoAudio" icon="el-icon-star-on" />
+
         <h2>Feature1: The video resolution is changeable in runtime</h2>
         <el-button type="success" v-show="showPlayButton" @click="playAudio" icon="el-icon-service" circle/>
         <h2>Feature2: Audio transport, if you click the audio button, you will sound 'Gong, Gong, Gong...'</h2>
@@ -7,7 +10,7 @@
         <h2>Feature3: Data channel, click test button to test data channel communication</h2>
         <el-button type="success" @click="changeBandWidth">Change Bandwidth</el-button>
         <h2>Feature4: Change bandwidth</h2>
-        <video id="video" muted autoplay/>
+        <video id="video" controls muted autoplay/>
         <audio id="audio" autoplay style="width: 0;height: 0;"></audio>
     </div>
 </template>
@@ -40,7 +43,6 @@
       },
       status: function () {
         this.generatePeerConnection()
-        this.$socket.emit('beginWebRtc')
       },
       offerSdp: function (sdp) {
         this.peerConnect.setRemoteDescription(new RTCSessionDescription(sdp))
@@ -63,6 +65,13 @@
     methods: {
       beginUse() {
         this.$socket.emit('beginUse')
+      },
+      startFfmpeg() {
+        this.$socket.emit('startFfmpeg')
+      },
+      startReceivingVideoAudio() {
+          this.$socket.emit('startReceivingVideoAudio')
+          this.$socket.emit('beginWebRtc')
       },
       changeBandWidth() {
         this.$message('bitrate change to: 100000')
